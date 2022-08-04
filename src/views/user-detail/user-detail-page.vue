@@ -67,7 +67,12 @@ export default class UserDetailPage extends Vue {
   public async mounted() {
     const id = +this.$route.params.id;
 
-    this.user = await UsersService.getUser(id);
+    try {
+      this.user = await UsersService.getUser(id);
+    } catch (e: any) {
+      this.$notify({type: 'error', text: e.message});
+    }
+
     this.loaded = true;
   }
 
@@ -80,9 +85,14 @@ export default class UserDetailPage extends Vue {
   }
 
   public async deleteUser() {
-    await UsersService.deleteUser(this.user.id);
+    try {
+      await UsersService.deleteUser(this.user.id);
+      window.location.href = '/';
+    } catch (e: any) {
+      this.$notify({type: 'error', text: e.message});
+    }
+
     this.isShowConfirmDeleteModal = false;
-    window.location.href = '/';
   }
 }
 </script>

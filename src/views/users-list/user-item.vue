@@ -2,9 +2,9 @@
   <div class="user-item card" @click="goToUser">
     <div class="info-block">
       <div :class="user.is_active ? 'online' : 'offline'"/>
-      <span class="user-name">{{user.last_name}} {{user.first_name}}</span>
-      <span class="about-user">{{user.birth_date}}</span>
-      <span class="about-user">{{user.gender}}</span>
+      <span class="user-name">{{ user.last_name }} {{ user.first_name }}</span>
+      <span class="about-user">{{ user.birth_date }}</span>
+      <span class="about-user">{{ user.gender }}</span>
     </div>
     <div class="control-block">
       <button class="btn-edit" @click.prevent.stop="editUser">Edit</button>
@@ -54,9 +54,17 @@ export default class UserItem extends Vue {
   }
 
   public async deleteUser() {
-    await UsersService.deleteUser(this.user.id);
-    this.isShowConfirmDeleteModal = false;
-    window.location.href = '/';
+    try {
+      await UsersService.deleteUser(this.user.id);
+      this.isShowConfirmDeleteModal = false;
+      this.$notify({
+        type: 'info',
+        text: `User ${this.user.first_name} ${this.user.last_name} was deleted`
+      });
+      window.location.href = '/';
+    } catch (e: any) {
+      this.$notify({type: 'error', text: e.message});
+    }
   }
 }
 </script>
@@ -84,7 +92,7 @@ export default class UserItem extends Vue {
 }
 
 .user-name {
-  min-width: 160px;
+  min-width: 256px;
   margin-left: 16px;
   margin-right: 16px;
   font-weight: bold;

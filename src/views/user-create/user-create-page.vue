@@ -1,7 +1,7 @@
 <template>
   <div class="card">
-   <div class="card-head">
-        Create the new User
+    <div class="card-head">
+      Create the new User
     </div>
     <div class="card-content">
       <user-form-component v-model="user" ref="form"/>
@@ -38,7 +38,6 @@ export default class UserCreatePage extends Vue {
     biography: '',
     is_active: false,
   };
-  public loaded = true;
 
   public get form(): UserFormComponent {
     return this.$refs.form as UserFormComponent;
@@ -49,10 +48,16 @@ export default class UserCreatePage extends Vue {
       return;
     }
 
-    this.loaded = false;
-    this.user = await UsersService.createUser(this.user);
-    this.loaded = true;
-    window.location.href = '/';
+    try {
+      this.user = await UsersService.createUser(this.user);
+      this.$notify({
+        type: 'success',
+        text: `User ${this.user.first_name} ${this.user.last_name} was created`
+      });
+      window.location.href = '/';
+    } catch (e: any) {
+      this.$notify({type: 'error', text: e.message});
+    }
   }
 }
 </script>

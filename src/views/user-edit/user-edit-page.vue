@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-head">
-      Update the user {{fullName}}
+      Update the user {{ fullName }}
     </div>
     <div class="card-content">
       <user-form-component v-model="user" ref="form"/>
@@ -39,7 +39,6 @@ export default class UserEditPage extends Vue {
     is_active: false,
   };
   public fullName = '';
-  public loaded = true;
 
   public get form(): UserFormComponent {
     return this.$refs.form as UserFormComponent;
@@ -50,9 +49,12 @@ export default class UserEditPage extends Vue {
   public async mounted() {
     this.id = +this.$route.params.id;
 
-    this.user = await UsersService.getUser(this.id);
-    this.fullName = `${this.user.first_name} ${this.user.last_name}`;
-    this.loaded = true;
+    try {
+      this.user = await UsersService.getUser(this.id);
+      this.fullName = `${this.user.first_name} ${this.user.last_name}`;
+    } catch (e: any) {
+      this.$notify({type: 'error', text: e.message});
+    }
   }
 
   public async updateUser() {
@@ -60,10 +62,13 @@ export default class UserEditPage extends Vue {
       return;
     }
 
-    this.loaded = false;
-    this.user = await UsersService.updateUser(this.id, this.user);
-    this.loaded = true;
-    window.location.href = '/';
+    try {
+      this.user = await UsersService.updateUser(this.id, this.user);
+      this.$notify({type: 'success', text: `User ${this.fullName} was created`});
+      window.location.href = '/';
+    } catch (e: any) {
+      this.$notify({type: 'error', text: e.message});
+    }
   }
 }
 </script>

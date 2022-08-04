@@ -29,7 +29,12 @@ export default class UsersListPage extends Vue {
   public loaded = false;
 
   public async mounted() {
-    this.users = await UsersService.getUsers();
+    try {
+      this.users = await UsersService.getUsers();
+    } catch (e: any) {
+      this.$notify({type: 'error', text: e.message});
+    }
+
     this.loaded = true;
   }
 }

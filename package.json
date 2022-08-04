@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@kyvg/vue3-notification": "^2.3.6",
     "@vuepic/vue-datepicker": "^3.4.0",
     "@vuelidate/core": "^2.0.0-alpha.43",
     "@vuelidate/validators": "^2.0.0-alpha.31",
