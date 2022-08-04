@@ -16,6 +16,7 @@ export default class App extends Vue {}
 * {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -53,8 +54,8 @@ body {
 
 .card-content {
   display: flex;
-  flex-direction: row;
-  padding: 24px 16px;
+  flex-direction: column;
+  padding: 24px 36px;
 }
 
 .card-foot {
@@ -62,6 +63,23 @@ body {
   flex-direction: row;
   justify-content: end;
   border-top: 1px solid rgba(blue, .2);
+}
+
+.form-control {
+  display: flex;
+  min-width: 128px;
+  max-width: 756px;
+  margin-top: 8px;
+  color: var(--accent-color);
+
+  & > label {
+    flex: 0 5 20%;
+    font-weight: bold;
+  }
+
+  & > span, & > .form-input {
+    flex: 0 5 80%;
+  }
 }
 
 .online, .offline {
@@ -119,6 +137,10 @@ body {
   &:hover {
     color: brown;
   }
+}
+
+.mt-24 {
+  margin-top: 24px !important;
 }
 
 :root {

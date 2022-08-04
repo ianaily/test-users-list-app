@@ -1,7 +1,12 @@
 <template>
   <div>
     <create-user-link-component/>
-    <user-item v-for="user in users" :user="user" :key="user.id"/>
+    <div v-if="loaded">
+      <user-item v-for="user in users" :user="user" :key="user.id"/>
+    </div>
+    <div class="card" v-else>
+      <p class="card-head">loading...</p>
+    </div>
   </div>
 </template>
 
@@ -21,9 +26,11 @@ import UserItem from '@/views/users-list/user-item.vue';
 })
 export default class UsersListPage extends Vue {
   public users: User[] = [];
+  public loaded = false;
 
   public async mounted() {
     this.users = await UsersService.getUsers();
+    this.loaded = true;
   }
 }
 </script>

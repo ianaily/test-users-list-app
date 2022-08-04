@@ -1,5 +1,5 @@
 <template>
-  <div class="user-item card" @click.prevent="goToUser">
+  <div class="user-item card" @click="goToUser">
     <div class="info-block">
       <div :class="user.is_active ? 'online' : 'offline'"/>
       <span class="user-name">{{user.last_name}} {{user.first_name}}</span>
@@ -7,7 +7,7 @@
       <span class="about-user">{{user.gender}}</span>
     </div>
     <div class="control-block">
-      <a class="btn-edit" :href="`/users/${user.id}/edit/`">Edit</a>
+      <button class="btn-edit" @click.prevent.stop="editUser">Edit</button>
       <button class="btn-delete" @click.prevent.stop="showConfirmDeleteModal">Delete</button>
     </div>
     <confirm-delete-modal :is-show="isShowConfirmDeleteModal"
@@ -39,6 +39,10 @@ export default class UserItem extends Vue {
 
   public goToUser() {
     window.location.href = `/users/${this.user.id}/`;
+  }
+
+  public editUser() {
+    window.location.href = `/users/${this.user.id}/edit/`;
   }
 
   public showConfirmDeleteModal(): void {

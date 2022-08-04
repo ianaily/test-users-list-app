@@ -5,7 +5,7 @@
       <div class="card-head">
         <div class="info-block">
           <div :class="user.is_active ? 'online' : 'offline'"/>
-          <span class="user-name">{{user.last_name}} {{user.first_name}}</span>
+          <span class="user-name">{{ user.last_name }} {{ user.first_name }}</span>
         </div>
         <div class="control-block">
           <a class="btn-edit" :href="`/users/${user.id}/edit/`">Edit</a>
@@ -13,17 +13,21 @@
         </div>
       </div>
       <div class="card-content">
-        <div>
-          <b>Birth date: </b>
-          <b>Sex: </b>
-          <b>Job: </b>
-          <b class="bio">Bio: </b>
+        <div class="form-control">
+          <label>Birth date: </label>
+          <span>{{ user.birth_date }}</span>
         </div>
-        <div>
-          <p class="about-user">{{user.birth_date}}</p>
-          <p class="about-user">{{user.gender}}</p>
-          <p class="about-user">{{user.job}}</p>
-          <p class="about-user bio">{{user.biography}}</p>
+        <div class="form-control">
+          <label>Sex: </label>
+          <span>{{ user.gender }}</span>
+        </div>
+        <div class="form-control">
+          <label>Job: </label>
+          <span>{{ user.job }}</span>
+        </div>
+        <div class="form-control mt-24">
+          <label>Bio: </label>
+          <span>{{ user.biography }}</span>
         </div>
       </div>
       <div class="card-foot">
@@ -83,7 +87,7 @@ export default class UserDetailPage extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .info-block {
   display: flex;
   align-items: center;
@@ -93,28 +97,10 @@ export default class UserDetailPage extends Vue {
 .card-head {
   justify-content: space-between;
   padding: 8px 16px;
-
-  & .user-name {
-    font-weight: bold;
-    color: black;
-  }
 }
 
-.card-content {
-  & > div {
-    display: flex;
-    flex-direction: column;
-    min-width: 128px;
-    max-width: 756px;
-    color: var(--accent-color);
-
-    & p, & b {
-      margin-top: 6px;
-    }
-  }
-
-  & .bio {
-    margin-top: 24px;
-  }
+.user-name {
+  font-weight: bold;
+  color: black;
 }
 </style>
